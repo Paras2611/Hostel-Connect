@@ -26,9 +26,9 @@ export const StudentDashboard: React.FC = () => {
     <div className="max-w-5xl mx-auto px-4 py-8 space-y-8">
       
       {/* Search Header */}
-      <div className="bg-white rounded-2xl p-6 shadow-sm border border-gray-100">
-        <h2 className="text-xl font-bold mb-4 flex items-center gap-2">
-          <Search className="text-blue-600" size={24} />
+      <div className="bg-white rounded-2xl p-6 shadow-sm border border-gray-200">
+        <h2 className="text-xl font-bold mb-4 flex items-center gap-2 text-[#1F2933]">
+          <Search className="text-[#F2A65A]" size={24} />
           Find Accommodation
         </h2>
         
@@ -36,7 +36,7 @@ export const StudentDashboard: React.FC = () => {
           <div className="space-y-2">
             <label className="text-sm font-medium text-gray-700">Select College</label>
             <select 
-              className="w-full p-2.5 bg-gray-50 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none"
+              className="w-full p-2.5 bg-[#F8FAFC] border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#3F4C6B] focus:border-[#3F4C6B] outline-none"
               value={selectedCollege}
               onChange={(e) => setSelectedCollege(e.target.value)}
             >
@@ -50,7 +50,7 @@ export const StudentDashboard: React.FC = () => {
           <div className="space-y-2">
             <div className="flex justify-between text-sm">
               <label className="font-medium text-gray-700">Distance</label>
-              <span className="text-blue-600 font-semibold">&lt; {maxDistance} km</span>
+              <span className="text-[#3F4C6B] font-semibold">&lt; {maxDistance} km</span>
             </div>
             <input 
               type="range" 
@@ -59,7 +59,7 @@ export const StudentDashboard: React.FC = () => {
               step="0.5"
               value={maxDistance}
               onChange={(e) => setMaxDistance(parseFloat(e.target.value))}
-              className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-blue-600"
+              className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-[#F2A65A]"
             />
             <div className="flex justify-between text-xs text-gray-400">
               <span>0.5km</span>
@@ -70,7 +70,7 @@ export const StudentDashboard: React.FC = () => {
           <div className="space-y-2">
             <div className="flex justify-between text-sm">
               <label className="font-medium text-gray-700">Max Rent</label>
-              <span className="text-blue-600 font-semibold">₹{maxRent}</span>
+              <span className="text-[#3F4C6B] font-semibold">₹{maxRent}</span>
             </div>
             <input 
               type="range" 
@@ -79,7 +79,7 @@ export const StudentDashboard: React.FC = () => {
               step="500"
               value={maxRent}
               onChange={(e) => setMaxRent(parseInt(e.target.value))}
-              className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-blue-600"
+              className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-[#F2A65A]"
             />
             <div className="flex justify-between text-xs text-gray-400">
               <span>₹1k</span>
@@ -92,7 +92,7 @@ export const StudentDashboard: React.FC = () => {
       {/* Results */}
       <div>
         <div className="flex items-center justify-between mb-4">
-          <h3 className="text-lg font-semibold text-gray-800">
+          <h3 className="text-lg font-semibold text-[#1F2933]">
             {filteredListings.length} Result{filteredListings.length !== 1 ? 's' : ''} Found
           </h3>
           <div className="flex items-center gap-1 text-sm text-gray-500">
@@ -120,7 +120,7 @@ export const StudentDashboard: React.FC = () => {
                 setMaxDistance(10);
                 setMaxRent(20000);
               }}
-              className="text-blue-600 font-medium mt-2 hover:underline"
+              className="text-[#F2A65A] font-medium mt-2 hover:underline"
             >
               Clear Filters
             </button>

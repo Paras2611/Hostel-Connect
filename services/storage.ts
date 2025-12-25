@@ -13,7 +13,23 @@ export const StorageService = {
   },
 
   login: (email: string, password: string, role: UserRole): User => {
-    // Admin Hardcoded Check
+    // 1. Strict check if user selects Admin role
+    if (role === 'admin') {
+      if (email === 'admin@hostel.com' && password === 'admin123') {
+        const adminUser: User = {
+          id: 'admin_1',
+          name: 'Administrator',
+          email: email,
+          role: 'admin'
+        };
+        localStorage.setItem(KEYS.USER, JSON.stringify(adminUser));
+        return adminUser;
+      } else {
+        throw new Error("Invalid credentials for Admin. Please use admin@hostel.com");
+      }
+    }
+
+    // 2. Global check for admin credentials (convenience if they enter admin creds but selected another role)
     if (email === 'admin@hostel.com' && password === 'admin123') {
       const adminUser: User = {
         id: 'admin_1',
@@ -25,7 +41,7 @@ export const StorageService = {
       return adminUser;
     }
 
-    // Simulation for Students/Owners (Accept any password for demo)
+    // 3. Simulation for Students/Owners (Accept any password for demo)
     const name = email.split('@')[0];
     const user: User = {
       id: role === 'owner' ? `owner_${Date.now()}` : `student_${Date.now()}`,
@@ -54,6 +70,15 @@ export const StorageService = {
     const listings = StorageService.getListings();
     listings.unshift(listing);
     localStorage.setItem(KEYS.LISTINGS, JSON.stringify(listings));
+  },
+
+  updateListing: (updatedListing: Listing) => {
+    const listings = StorageService.getListings();
+    const index = listings.findIndex(l => l.id === updatedListing.id);
+    if (index !== -1) {
+      listings[index] = updatedListing;
+      localStorage.setItem(KEYS.LISTINGS, JSON.stringify(listings));
+    }
   },
 
   deleteListing: (id: string) => {

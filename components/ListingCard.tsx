@@ -1,13 +1,14 @@
 import React from 'react';
 import { Listing } from '../types';
 import { Button } from './Button';
-import { MapPin, Phone, User, Building, Wifi, Droplets, Utensils, Zap, Video, Wind, Home } from 'lucide-react';
+import { MapPin, Phone, User, Building, Wifi, Droplets, Utensils, Zap, Video, Wind, Home, Pencil } from 'lucide-react';
 
 interface ListingCardProps {
   listing: Listing;
   collegeName?: string;
   isOwnerView?: boolean;
   onDelete?: (id: string) => void;
+  onEdit?: (listing: Listing) => void;
 }
 
 const getFacilityIcon = (name: string) => {
@@ -25,16 +26,17 @@ export const ListingCard: React.FC<ListingCardProps> = ({
   listing, 
   collegeName, 
   isOwnerView = false,
-  onDelete
+  onDelete,
+  onEdit
 }) => {
   return (
-    <div className="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden hover:shadow-md transition-shadow">
+    <div className="bg-[#E5E9F0] rounded-xl shadow-sm border border-white/50 overflow-hidden hover:shadow-md transition-shadow">
       {/* Replaced Random Image with Professional Placeholder */}
-      <div className="h-40 w-full bg-gradient-to-br from-blue-50 to-indigo-50 flex items-center justify-center relative">
-        <div className="text-blue-200">
+      <div className="h-40 w-full bg-gradient-to-br from-white to-[#cbd5e1] flex items-center justify-center relative">
+        <div className="text-[#3F4C6B]/50">
           <Home size={64} strokeWidth={1} />
         </div>
-        <div className="absolute top-2 right-2 bg-white/90 backdrop-blur px-2 py-1 rounded text-xs font-semibold text-gray-700 shadow-sm border border-gray-100">
+        <div className="absolute top-2 right-2 bg-[#F2A65A] px-2 py-1 rounded text-xs font-semibold text-white shadow-sm">
           {listing.distance} km from College
         </div>
       </div>
@@ -42,51 +44,61 @@ export const ListingCard: React.FC<ListingCardProps> = ({
       <div className="p-4">
         <div className="flex justify-between items-start mb-2">
           <div>
-            <h3 className="text-lg font-bold text-gray-900 leading-tight">{listing.title}</h3>
-            {collegeName && <p className="text-xs text-blue-600 font-medium mt-1">{collegeName}</p>}
+            <h3 className="text-lg font-bold text-[#1F2933] leading-tight">{listing.title}</h3>
+            {collegeName && <p className="text-xs text-[#3F4C6B] font-medium mt-1">{collegeName}</p>}
           </div>
-          <span className="bg-green-100 text-green-800 text-sm font-bold px-2 py-1 rounded">
-            ₹{listing.rent}/mo
+          <span className="text-[#4FBDBA] text-lg font-bold">
+            ₹{listing.rent}<span className="text-xs text-gray-500 font-normal">/mo</span>
           </span>
         </div>
 
         <div className="flex items-start gap-2 text-gray-600 text-sm mb-3">
-          <MapPin size={16} className="mt-0.5 shrink-0" />
+          <MapPin size={16} className="mt-0.5 shrink-0 text-[#3F4C6B]" />
           <p className="line-clamp-2">{listing.address}</p>
         </div>
 
         <div className="flex flex-wrap gap-2 mb-4">
           {listing.facilities.map((fac, idx) => (
-            <span key={idx} className="inline-flex items-center gap-1 bg-gray-50 text-gray-600 text-xs px-2 py-1 rounded border border-gray-200">
+            <span key={idx} className="inline-flex items-center gap-1 bg-white text-gray-600 text-xs px-2 py-1 rounded border border-gray-200">
               {getFacilityIcon(fac)}
               {fac}
             </span>
           ))}
         </div>
 
-        <div className="pt-3 border-t border-gray-100 flex items-center justify-between">
+        <div className="pt-3 border-t border-gray-200/60 flex items-center justify-between">
           <div className="flex items-center gap-2">
-            <div className="w-8 h-8 rounded-full bg-blue-100 flex items-center justify-center text-blue-600">
+            <div className="w-8 h-8 rounded-full bg-white flex items-center justify-center text-[#3F4C6B] border border-gray-200">
               <User size={16} />
             </div>
             <div>
               <p className="text-xs text-gray-500">Owner</p>
-              <p className="text-sm font-medium text-gray-900">{listing.ownerName}</p>
+              <p className="text-sm font-medium text-[#1F2933]">{listing.ownerName}</p>
             </div>
           </div>
           
           {isOwnerView ? (
-            <Button 
-              variant="danger" 
-              size="sm" 
-              onClick={() => onDelete?.(listing.id)}
-            >
-              Delete
-            </Button>
+            <div className="flex gap-2">
+              <Button 
+                variant="secondary" 
+                size="sm" 
+                onClick={() => onEdit?.(listing)}
+                className="px-3"
+              >
+                <Pencil size={14} className="mr-1" /> Edit
+              </Button>
+              <Button 
+                variant="danger" 
+                size="sm" 
+                onClick={() => onDelete?.(listing.id)}
+              >
+                Delete
+              </Button>
+            </div>
           ) : (
             <a 
               href={`tel:${listing.contact}`} 
-              className="inline-flex items-center gap-2 bg-blue-600 text-white text-sm font-medium px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors"
+              className="inline-flex items-center gap-2 bg-[#F2A65A] text-white text-sm font-medium px-4 py-2 rounded-lg hover:bg-[#d99046] transition-colors shadow-sm"
             >
               <Phone size={16} />
               Call
